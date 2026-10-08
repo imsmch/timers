@@ -70,7 +70,7 @@
             </div>
             <div>
                 <h1 class="text-xl font-bold bg-gradient-to-r from-cyan-400 via-blue-400 to-indigo-400 bg-clip-text text-transparent">Multi-Timer & Clock Suite</h1>
-                <p class="text-xs text-slate-400">1 Digital Clock • 3 Independent Timers</p>
+                <p class="text-xs text-slate-400">1 Digital Clock • 3 Labeled Timers</p>
             </div>
         </div>
         
@@ -118,462 +118,40 @@
             </div>
         </div>
 
-        <!-- SECTION 2: TRIPLE TIMERS -->
+        <!-- SECTION 2: TRIPLE TIMERS WITH CUSTOM LABELS -->
         <div>
             <div class="flex items-center gap-2 mb-4">
                 <i class="fa-solid fa-hourglass-half text-rose-400"></i>
-                <h2 class="text-sm font-semibold tracking-wider uppercase text-slate-400">Independent Timers</h2>
+                <h2 class="text-sm font-semibold tracking-wider uppercase text-slate-400">Task-Labeled Timers</h2>
             </div>
 
             <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
                 
                 <!-- TIMER 1 CARD (Fixed 1-Min) -->
                 <div id="timerCard1" class="glass-panel bg-slate-800/60 border border-slate-700/60 rounded-3xl p-6 flex flex-col justify-between shadow-xl relative overflow-hidden transition-all duration-300">
-                    <div class="flex justify-between items-center mb-2">
-                        <span class="text-xs font-semibold tracking-wider text-rose-400 uppercase flex items-center gap-2">
+                    <div class="flex justify-between items-center mb-3">
+                        <span class="text-xs font-semibold tracking-wider text-rose-400 uppercase flex items-center gap-1.5">
                             <i class="fa-solid fa-stopwatch"></i> Timer 1 (1 Min)
                         </span>
                         <span id="statusBadge1" class="text-[10px] px-2.5 py-1 rounded-full font-bold bg-slate-700 text-slate-300 uppercase tracking-wider">Ready</span>
                     </div>
 
-                    <!-- Progress Ring -->
-                    <div class="relative flex justify-center items-center py-4">
-                        <svg class="w-40 h-40 transform -rotate-90">
-                            <circle cx="80" cy="80" r="66" stroke="currentColor" stroke-width="8" class="text-slate-700/50" fill="transparent"/>
-                            <circle id="timerProgressCircle1" cx="80" cy="80" r="66" stroke="currentColor" stroke-width="8" 
-                                    class="text-rose-500 transition-all duration-1000 ease-linear" 
-                                    fill="transparent" 
-                                    stroke-dasharray="414.69" 
-                                    stroke-dashoffset="0"
-                                    stroke-linecap="round"/>
-                        </svg>
-
-                        <div class="absolute flex flex-col items-center justify-center">
-                            <span id="timerDisplay1" class="mono-font text-3xl font-extrabold text-slate-100">01:00</span>
-                            <span id="timerSubtext1" class="text-[11px] text-slate-400 mt-1">Fixed 60s</span>
+                    <!-- Editable Label Input -->
+                    <div class="mb-2">
+                        <div class="relative flex items-center">
+                            <i class="fa-solid fa-tag text-xs text-slate-400 absolute left-3 pointer-events-none"></i>
+                            <input id="label1" type="text" value="Quick Sprint" oninput="saveTimerLabel(1)" placeholder="Enter Task Label..." 
+                                   class="w-full pl-8 pr-3 py-1.5 bg-slate-900/80 border border-slate-700/80 rounded-xl text-xs font-semibold text-rose-300 placeholder-slate-500 focus:outline-none focus:border-rose-500 transition-all">
                         </div>
-                    </div>
-
-                    <!-- Timer Controls -->
-                    <div class="space-y-2 mt-2">
-                        <div class="grid grid-cols-2 gap-2">
-                            <button id="startTimerBtn1" onclick="toggleTimer(1)" class="py-2.5 px-4 rounded-xl font-semibold bg-emerald-600 hover:bg-emerald-500 active:scale-95 text-white shadow-lg transition-all flex items-center justify-center gap-2">
-                                <i id="startBtnIcon1" class="fa-solid fa-play text-sm"></i>
-                                <span id="startBtnText1">Start</span>
-                            </button>
-
-                            <button id="resetTimerBtn1" onclick="resetTimer(1)" class="py-2.5 px-4 rounded-xl font-semibold bg-slate-700 hover:bg-slate-600 active:scale-95 text-slate-200 transition-all flex items-center justify-center gap-2">
-                                <i class="fa-solid fa-rotate-left text-sm"></i>
-                                <span>Reset</span>
-                            </button>
+                        <!-- Quick presets -->
+                        <div class="flex gap-1 mt-1.5">
+                            <button onclick="setPresetLabel(1, 'Sprint')" class="text-[10px] px-2 py-0.5 rounded-md bg-slate-700/60 hover:bg-slate-700 text-slate-300 transition-all">Sprint</button>
+                            <button onclick="setPresetLabel(1, 'Tea Break')" class="text-[10px] px-2 py-0.5 rounded-md bg-slate-700/60 hover:bg-slate-700 text-slate-300 transition-all">Tea Break</button>
+                            <button onclick="setPresetLabel(1, 'Stretch')" class="text-[10px] px-2 py-0.5 rounded-md bg-slate-700/60 hover:bg-slate-700 text-slate-300 transition-all">Stretch</button>
                         </div>
-
-                        <button id="stopRingerBtn1" onclick="silenceRinger(1)" disabled class="w-full py-2.5 px-4 rounded-xl font-bold bg-slate-800 text-slate-500 border border-slate-700 cursor-not-allowed transition-all duration-200 flex items-center justify-center gap-2">
-                            <i class="fa-solid fa-volume-xmark text-base"></i>
-                            <span>Stop Ringer</span>
-                        </button>
-                    </div>
-                </div>
-
-                <!-- TIMER 2 CARD (Fixed 1-Min) -->
-                <div id="timerCard2" class="glass-panel bg-slate-800/60 border border-slate-700/60 rounded-3xl p-6 flex flex-col justify-between shadow-xl relative overflow-hidden transition-all duration-300">
-                    <div class="flex justify-between items-center mb-2">
-                        <span class="text-xs font-semibold tracking-wider text-amber-400 uppercase flex items-center gap-2">
-                            <i class="fa-solid fa-stopwatch"></i> Timer 2 (1 Min)
-                        </span>
-                        <span id="statusBadge2" class="text-[10px] px-2.5 py-1 rounded-full font-bold bg-slate-700 text-slate-300 uppercase tracking-wider">Ready</span>
-                    </div>
-
-                    <!-- Progress Ring -->
-                    <div class="relative flex justify-center items-center py-4">
-                        <svg class="w-40 h-40 transform -rotate-90">
-                            <circle cx="80" cy="80" r="66" stroke="currentColor" stroke-width="8" class="text-slate-700/50" fill="transparent"/>
-                            <circle id="timerProgressCircle2" cx="80" cy="80" r="66" stroke="currentColor" stroke-width="8" 
-                                    class="text-amber-500 transition-all duration-1000 ease-linear" 
-                                    fill="transparent" 
-                                    stroke-dasharray="414.69" 
-                                    stroke-dashoffset="0"
-                                    stroke-linecap="round"/>
-                        </svg>
-
-                        <div class="absolute flex flex-col items-center justify-center">
-                            <span id="timerDisplay2" class="mono-font text-3xl font-extrabold text-slate-100">01:00</span>
-                            <span id="timerSubtext2" class="text-[11px] text-slate-400 mt-1">Fixed 60s</span>
-                        </div>
-                    </div>
-
-                    <!-- Timer Controls -->
-                    <div class="space-y-2 mt-2">
-                        <div class="grid grid-cols-2 gap-2">
-                            <button id="startTimerBtn2" onclick="toggleTimer(2)" class="py-2.5 px-4 rounded-xl font-semibold bg-emerald-600 hover:bg-emerald-500 active:scale-95 text-white shadow-lg transition-all flex items-center justify-center gap-2">
-                                <i id="startBtnIcon2" class="fa-solid fa-play text-sm"></i>
-                                <span id="startBtnText2">Start</span>
-                            </button>
-
-                            <button id="resetTimerBtn2" onclick="resetTimer(2)" class="py-2.5 px-4 rounded-xl font-semibold bg-slate-700 hover:bg-slate-600 active:scale-95 text-slate-200 transition-all flex items-center justify-center gap-2">
-                                <i class="fa-solid fa-rotate-left text-sm"></i>
-                                <span>Reset</span>
-                            </button>
-                        </div>
-
-                        <button id="stopRingerBtn2" onclick="silenceRinger(2)" disabled class="w-full py-2.5 px-4 rounded-xl font-bold bg-slate-800 text-slate-500 border border-slate-700 cursor-not-allowed transition-all duration-200 flex items-center justify-center gap-2">
-                            <i class="fa-solid fa-volume-xmark text-base"></i>
-                            <span>Stop Ringer</span>
-                        </button>
-                    </div>
-                </div>
-
-                <!-- TIMER 3 CARD (Customizable Input Timer) -->
-                <div id="timerCard3" class="glass-panel bg-slate-800/60 border border-slate-700/60 rounded-3xl p-6 flex flex-col justify-between shadow-xl relative overflow-hidden transition-all duration-300">
-                    <div class="flex justify-between items-center mb-2">
-                        <span class="text-xs font-semibold tracking-wider text-cyan-400 uppercase flex items-center gap-2">
-                            <i class="fa-solid fa-sliders"></i> Timer 3 (Custom)
-                        </span>
-                        <span id="statusBadge3" class="text-[10px] px-2.5 py-1 rounded-full font-bold bg-slate-700 text-slate-300 uppercase tracking-wider">Ready</span>
-                    </div>
-
-                    <!-- Input Controls for Custom Time -->
-                    <div id="customTimeInputs" class="flex justify-center items-center gap-2 py-2">
-                        <div class="flex flex-col items-center">
-                            <label class="text-[10px] text-slate-400 uppercase font-bold mb-1">Mins</label>
-                            <input id="inputMins3" type="number" min="0" max="99" value="02" class="w-16 p-2 text-center mono-font bg-slate-900 border border-slate-700 rounded-xl text-cyan-400 font-bold text-lg focus:outline-none focus:border-cyan-500 transition-all">
-                        </div>
-                        <span class="text-xl font-bold text-slate-500 mt-4">:</span>
-                        <div class="flex flex-col items-center">
-                            <label class="text-[10px] text-slate-400 uppercase font-bold mb-1">Secs</label>
-                            <input id="inputSecs3" type="number" min="0" max="59" value="30" class="w-16 p-2 text-center mono-font bg-slate-900 border border-slate-700 rounded-xl text-cyan-400 font-bold text-lg focus:outline-none focus:border-cyan-500 transition-all">
-                        </div>
-                        <button onclick="applyCustomTime()" class="mt-4 p-2.5 rounded-xl bg-slate-700 hover:bg-slate-600 text-slate-200 text-xs font-semibold transition-all" title="Apply Duration">
-                            Set
-                        </button>
                     </div>
 
                     <!-- Progress Ring -->
                     <div class="relative flex justify-center items-center py-2">
                         <svg class="w-40 h-40 transform -rotate-90">
-                            <circle cx="80" cy="80" r="66" stroke="currentColor" stroke-width="8" class="text-slate-700/50" fill="transparent"/>
-                            <circle id="timerProgressCircle3" cx="80" cy="80" r="66" stroke="currentColor" stroke-width="8" 
-                                    class="text-cyan-400 transition-all duration-1000 ease-linear" 
-                                    fill="transparent" 
-                                    stroke-dasharray="414.69" 
-                                    stroke-dashoffset="0"
-                                    stroke-linecap="round"/>
-                        </svg>
-
-                        <div class="absolute flex flex-col items-center justify-center">
-                            <span id="timerDisplay3" class="mono-font text-3xl font-extrabold text-slate-100">02:30</span>
-                            <span id="timerSubtext3" class="text-[11px] text-slate-400 mt-1">User Defined</span>
-                        </div>
-                    </div>
-
-                    <!-- Timer Controls -->
-                    <div class="space-y-2 mt-2">
-                        <div class="grid grid-cols-2 gap-2">
-                            <button id="startTimerBtn3" onclick="toggleTimer(3)" class="py-2.5 px-4 rounded-xl font-semibold bg-emerald-600 hover:bg-emerald-500 active:scale-95 text-white shadow-lg transition-all flex items-center justify-center gap-2">
-                                <i id="startBtnIcon3" class="fa-solid fa-play text-sm"></i>
-                                <span id="startBtnText3">Start</span>
-                            </button>
-
-                            <button id="resetTimerBtn3" onclick="resetTimer(3)" class="py-2.5 px-4 rounded-xl font-semibold bg-slate-700 hover:bg-slate-600 active:scale-95 text-slate-200 transition-all flex items-center justify-center gap-2">
-                                <i class="fa-solid fa-rotate-left text-sm"></i>
-                                <span>Reset</span>
-                            </button>
-                        </div>
-
-                        <button id="stopRingerBtn3" onclick="silenceRinger(3)" disabled class="w-full py-2.5 px-4 rounded-xl font-bold bg-slate-800 text-slate-500 border border-slate-700 cursor-not-allowed transition-all duration-200 flex items-center justify-center gap-2">
-                            <i class="fa-solid fa-volume-xmark text-base"></i>
-                            <span>Stop Ringer</span>
-                        </button>
-                    </div>
-                </div>
-
-            </div>
-        </div>
-
-    </main>
-
-    <!-- Footer -->
-    <footer class="w-full max-w-7xl mx-auto px-4 py-4 text-center text-xs text-slate-500 border-t border-slate-800/80">
-        <p>Built with Web Audio API Synthesizer • Responsive Single Page Application</p>
-    </footer>
-
-    <script>
-        /* -------------------------------------------------------------
-           1. SINGLE DIGITAL CLOCK LOGIC
-           ------------------------------------------------------------- */
-        function updateClock() {
-            const now = new Date();
-
-            let localHours = now.getHours();
-            const localMins = String(now.getMinutes()).padStart(2, '0');
-            const localSecs = String(now.getSeconds()).padStart(2, '0');
-            const localAmpm = localHours >= 12 ? 'PM' : 'AM';
-            
-            localHours = localHours % 12;
-            localHours = localHours ? localHours : 12;
-            const formattedLocalHours = String(localHours).padStart(2, '0');
-
-            document.getElementById('localClockTime').innerHTML = `
-                ${formattedLocalHours}:${localMins}:${localSecs} <span class="text-2xl sm:text-4xl text-cyan-400 font-normal">${localAmpm}</span>
-            `;
-
-            const dateOptions = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
-            document.getElementById('localClockDate').textContent = now.toLocaleDateString(undefined, dateOptions);
-        }
-
-        try {
-            const tz = Intl.DateTimeFormat().resolvedOptions().timeZone;
-            if (tz) document.getElementById('localZoneLabel').textContent = tz;
-        } catch(e){}
-
-        setInterval(updateClock, 200);
-        updateClock();
-
-
-        /* -------------------------------------------------------------
-           2. WEB AUDIO API SYNTHESIZER
-           ------------------------------------------------------------- */
-        let audioCtx = null;
-
-        function initAudioContext() {
-            if (!audioCtx) {
-                audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-            }
-            if (audioCtx.state === 'suspended') {
-                audioCtx.resume();
-            }
-        }
-
-        // Distinct musical pitches for each of the 3 timers
-        const RINGER_PITCHES = {
-            1: [523.25, 659.25, 783.99], // C5 Major Triad
-            2: [587.33, 739.99, 880.00], // D5 Major Triad
-            3: [659.25, 830.61, 987.77]  // E5 Major Triad
-        };
-
-        function playChimeTone(timerId, freq, duration, delay = 0) {
-            if (!audioCtx) return;
-
-            setTimeout(() => {
-                try {
-                    const osc = audioCtx.createOscillator();
-                    const gain = audioCtx.createGain();
-
-                    osc.type = 'sine';
-                    osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
-
-                    gain.gain.setValueAtTime(0, audioCtx.currentTime);
-                    gain.gain.linearRampToValueAtTime(0.3, audioCtx.currentTime + 0.04);
-                    gain.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + duration);
-
-                    osc.connect(gain);
-                    gain.connect(audioCtx.destination);
-
-                    osc.start();
-                    osc.stop(audioCtx.currentTime + duration);
-                } catch (err) {
-                    console.error("Audio playback error:", err);
-                }
-            }, delay * 1000);
-        }
-
-        function triggerRingerPattern(timerId) {
-            const pitches = RINGER_PITCHES[timerId] || RINGER_PITCHES[1];
-            playChimeTone(timerId, pitches[0], 0.4, 0);
-            playChimeTone(timerId, pitches[1], 0.5, 0.15);
-            playChimeTone(timerId, pitches[2], 0.7, 0.35);
-        }
-
-
-        /* -------------------------------------------------------------
-           3. TRIPLE TIMERS LOGIC & STATE MANAGEMENT
-           ------------------------------------------------------------- */
-        const CIRCLE_CIRCUMFERENCE = 2 * Math.PI * 66; // ~414.69
-
-        const timerState = {
-            1: { total: 60, remaining: 60, ticker: null, isRunning: false, isRinging: false, alarmInterval: null },
-            2: { total: 60, remaining: 60, ticker: null, isRunning: false, isRinging: false, alarmInterval: null },
-            3: { total: 150, remaining: 150, ticker: null, isRunning: false, isRinging: false, alarmInterval: null }
-        };
-
-        function updateTimerDisplay(id) {
-            const state = timerState[id];
-            const mins = Math.floor(state.remaining / 60);
-            const secs = state.remaining % 60;
-            
-            document.getElementById(`timerDisplay${id}`).textContent = 
-                `${String(mins).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
-
-            // Update circular SVG progress
-            const progressRatio = state.total > 0 ? (state.remaining / state.total) : 0;
-            const offset = CIRCLE_CIRCUMFERENCE * (1 - progressRatio);
-            document.getElementById(`timerProgressCircle${id}`).style.strokeDashoffset = offset;
-        }
-
-        function applyCustomTime() {
-            const mins = parseInt(document.getElementById('inputMins3').value) || 0;
-            const secs = parseInt(document.getElementById('inputSecs3').value) || 0;
-            const totalSecs = (mins * 60) + secs;
-
-            if (totalSecs <= 0) return;
-
-            resetTimer(3);
-            timerState[3].total = totalSecs;
-            timerState[3].remaining = totalSecs;
-            updateTimerDisplay(3);
-        }
-
-        function startAlarmRinger(id) {
-            initAudioContext();
-            const state = timerState[id];
-            state.isRinging = true;
-
-            triggerRingerPattern(id);
-
-            if (state.alarmInterval) clearInterval(state.alarmInterval);
-            state.alarmInterval = setInterval(() => triggerRingerPattern(id), 1200);
-
-            updateTimerUI(id);
-        }
-
-        function silenceRinger(id) {
-            const state = timerState[id];
-            if (state.alarmInterval) {
-                clearInterval(state.alarmInterval);
-                state.alarmInterval = null;
-            }
-            state.isRinging = false;
-            updateTimerUI(id);
-        }
-
-        function toggleTimer(id) {
-            initAudioContext();
-            const state = timerState[id];
-
-            if (state.isRunning) {
-                // Pause Timer
-                clearInterval(state.ticker);
-                state.isRunning = false;
-                updateTimerUI(id);
-            } else {
-                // Auto reset if starting from 0
-                if (state.remaining === 0) {
-                    resetTimer(id);
-                }
-
-                state.isRunning = true;
-                updateTimerUI(id);
-
-                state.ticker = setInterval(() => {
-                    if (state.remaining > 0) {
-                        state.remaining--;
-                        updateTimerDisplay(id);
-
-                        if (state.remaining === 0) {
-                            clearInterval(state.ticker);
-                            state.isRunning = false;
-                            startAlarmRinger(id);
-                        }
-                    }
-                }, 1000);
-            }
-        }
-
-        function resetTimer(id) {
-            const state = timerState[id];
-
-            if (state.ticker) clearInterval(state.ticker);
-            state.isRunning = false;
-
-            silenceRinger(id);
-
-            if (id === 3) {
-                const mins = parseInt(document.getElementById('inputMins3').value) || 0;
-                const secs = parseInt(document.getElementById('inputSecs3').value) || 0;
-                state.total = (mins * 60) + secs || 150;
-            } else {
-                state.total = 60;
-            }
-
-            state.remaining = state.total;
-            updateTimerDisplay(id);
-            updateTimerUI(id);
-        }
-
-        function updateTimerUI(id) {
-            const state = timerState[id];
-            const startBtnText = document.getElementById(`startBtnText${id}`);
-            const startBtnIcon = document.getElementById(`startBtnIcon${id}`);
-            const startBtn = document.getElementById(`startTimerBtn${id}`);
-            const stopBtn = document.getElementById(`stopRingerBtn${id}`);
-            const timerCard = document.getElementById(`timerCard${id}`);
-            const statusBadge = document.getElementById(`statusBadge${id}`);
-
-            // Start/Pause Button State
-            if (state.isRunning) {
-                startBtnText.textContent = "Pause";
-                startBtnIcon.className = "fa-solid fa-pause text-sm";
-                startBtn.className = "py-2.5 px-4 rounded-xl font-semibold bg-amber-600 hover:bg-amber-500 text-white shadow-lg transition-all flex items-center justify-center gap-2";
-            } else {
-                startBtnText.textContent = state.remaining < state.total && state.remaining > 0 ? "Resume" : "Start";
-                startBtnIcon.className = "fa-solid fa-play text-sm";
-                startBtn.className = "py-2.5 px-4 rounded-xl font-semibold bg-emerald-600 hover:bg-emerald-500 text-white shadow-lg transition-all flex items-center justify-center gap-2";
-            }
-
-            // Alarm Ringer State
-            if (state.isRinging) {
-                stopBtn.disabled = false;
-                stopBtn.className = "w-full py-2.5 px-4 rounded-xl font-bold bg-rose-600 hover:bg-rose-500 text-white shadow-lg shadow-rose-900/40 active:scale-95 transition-all duration-200 flex items-center justify-center gap-2 animate-bounce";
-
-                timerCard.classList.add('alarm-active', 'border-rose-500', 'ring-4', 'ring-rose-500/30');
-
-                statusBadge.textContent = "RINGING";
-                statusBadge.className = "text-[10px] px-2.5 py-1 rounded-full font-bold bg-rose-500 text-white uppercase tracking-wider animate-pulse";
-            } else {
-                stopBtn.disabled = true;
-                stopBtn.className = "w-full py-2.5 px-4 rounded-xl font-bold bg-slate-800 text-slate-500 border border-slate-700 cursor-not-allowed transition-all duration-200 flex items-center justify-center gap-2";
-
-                timerCard.classList.remove('alarm-active', 'border-rose-500', 'ring-4', 'ring-rose-500/30');
-
-                if (state.remaining === 0) {
-                    statusBadge.textContent = "Finished";
-                    statusBadge.className = "text-[10px] px-2.5 py-1 rounded-full font-bold bg-emerald-500/20 text-emerald-400 uppercase tracking-wider";
-                } else if (state.isRunning) {
-                    statusBadge.textContent = "Running";
-                    statusBadge.className = "text-[10px] px-2.5 py-1 rounded-full font-bold bg-rose-500/20 text-rose-400 uppercase tracking-wider";
-                } else if (state.remaining < state.total) {
-                    statusBadge.textContent = "Paused";
-                    statusBadge.className = "text-[10px] px-2.5 py-1 rounded-full font-bold bg-amber-500/20 text-amber-400 uppercase tracking-wider";
-                } else {
-                    statusBadge.textContent = "Ready";
-                    statusBadge.className = "text-[10px] px-2.5 py-1 rounded-full font-bold bg-slate-700 text-slate-300 uppercase tracking-wider";
-                }
-            }
-        }
-
-        /* -------------------------------------------------------------
-           4. DARK / LIGHT THEME TOGGLE
-           ------------------------------------------------------------- */
-        const themeToggleBtn = document.getElementById('themeToggleBtn');
-        const themeIcon = document.getElementById('themeIcon');
-        const html = document.documentElement;
-
-        themeToggleBtn.addEventListener('click', () => {
-            if (html.classList.contains('dark')) {
-                html.classList.remove('dark');
-                document.body.className = "bg-slate-100 text-slate-800 min-h-screen flex flex-col justify-between selection:bg-cyan-500 selection:text-white";
-                themeIcon.className = "fa-solid fa-moon text-lg text-slate-600";
-            } else {
-                html.classList.add('dark');
-                document.body.className = "bg-slate-900 text-slate-100 min-h-screen flex flex-col justify-between selection:bg-cyan-500 selection:text-white";
-                themeIcon.className = "fa-solid fa-sun text-lg text-slate-300";
-            }
-        });
-
-        // Initialize displays on load
-        updateTimerDisplay(1);
-        updateTimerDisplay(2);
-        updateTimerDisplay(3);
-    </script>
-</body>
-</html>
+                            <circle cx="80" cy="80" r="66" stroke="currentColor" stroke-width="8" class="text-slate
